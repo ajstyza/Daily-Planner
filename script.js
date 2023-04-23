@@ -6,8 +6,8 @@ $('#currentDay').text(currentDay);
 };
 setInterval(updateTime, 1000)
 
-//
- $(document).ready(function() {  })
+//allows click to save text and time locally
+ $(document).ready(function() {  
 
   $(".saveBtn").on("click", function () {
   
@@ -15,21 +15,31 @@ setInterval(updateTime, 1000)
     let timeStamp = $(this).parent(".time-block").attr("id");
     localStorage.setItem(timeStamp, description);
 
-  });
-  //
-var time = dayjs().format("hh:mm")
-$(".time-block").each(function () { 
-var hour = $(this).parseInit($('#id'));
+  })
+  // iterates over time-blocks and compares time block againt current time, and then rmoves classes, leaving the appropriate .css style
+  function schedule() {
+  var time = dayjs().hour();
 
-  if (time === hour) {
-  $(".time-block").remove("past", "future")
- }
-  else if (time > hour) {
-    $(".time-block").remove("present", "future")
-  
+  $(".time-block").each(function () { 
+  var blockHour = $parseInit($(this).attr("id").split("hour-")[1]);
+
+  if (blockHour < time) {
+    $(this).removeClass("future");
+    $(this).removeClass("present");
+    $(this).addClass("past");
   }
-  else (time < hour); {
-    $(".time-block").remove("past", "present")
+  else if (blockHour === time) {
+    $(this).removeClass("past");
+    $(this).removeClass("future");
+    $(this).addClass("present");
+  }
+  else {
+    $(this).removeClass("present");
+    $(this).removeClass("past");
+    $(this).addClass("future");
+  }
+})
+ }
 
- };
+ schedule();
 });
