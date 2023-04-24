@@ -13,7 +13,7 @@ setInterval(updateTime, 1000)
   
     let description = $(this).siblings(".description").val();
     let timeStamp = $(this).parent(".time-block").attr("id");
-    localStorage.setItem(timeStamp, description);
+    // localStorage.setItem(timeStamp, description);
 
   })
   // iterates over time-blocks and compares time block againt current time, and then rmoves classes, leaving the appropriate .css style
@@ -21,7 +21,7 @@ setInterval(updateTime, 1000)
   var time = dayjs().hour();
 
   $(".time-block").each(function () { 
-  var blockHour = $parseInit($(this).attr("id").split("hour-")[1]);
+  var blockHour = parseInt($(this).attr("id").split("-")[1]);
 
   if (blockHour < time) {
     $(this).removeClass("future");
@@ -40,6 +40,5 @@ setInterval(updateTime, 1000)
   }
 })
  }
-
  schedule();
 });
